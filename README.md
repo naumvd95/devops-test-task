@@ -43,6 +43,11 @@ To provide valid development process we need to prepare at least 2 k8s clusters:
 Need to store kubeconfig of p.1 k8s cluster as secret in your CICD platform (git actions workflow),
 on a permanent manner
 
+```bash
+cd cicd_stage_1
+less README.md
+```
+
 
 ### stage 2
 

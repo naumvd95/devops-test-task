@@ -13,3 +13,4 @@
 # temp credentials
 *tf-ssh*
 *ansible-hosts*
+*kubeconfig-public.yaml*
