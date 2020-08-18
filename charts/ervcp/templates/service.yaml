@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: ervcp
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.appPort }}
+    targetPort: {{ .Values.appPort }}
+  selector:
+    app: ervcp

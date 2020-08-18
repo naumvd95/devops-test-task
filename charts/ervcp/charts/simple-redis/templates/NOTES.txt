@@ -1,0 +1,1 @@
+Simple redis chart has been deployed.

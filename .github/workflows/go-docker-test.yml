@@ -1,0 +1,40 @@
+name: Test docker image with go binary
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: lint
+      run: make dockerized-lint
+
+    - name: Build binary and pack inside docker image
+      run: |
+        docker run --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -v $(pwd):/go/src/github.com/naumvd95/devops-test-task \
+        -w=/go/src/github.com/naumvd95/devops-test-task \
+        vnaumov/go-k8s-infra-ops:latest make app-image
+
+    - name: Push image
+      run: |
+          make \
+          DOCKER_USERNAME=${{ secrets.dockerhub_username }} \
+          DOCKER_PASSWORD=${{ secrets.dockerhub_password }} \
+          image-push
+    
+    - name: Get image version
+      run: echo "::set-output name=docker_image::$(make version)"
+      id: release_candidate
+      
+    - name: Smoke test
+      run: echo TODO

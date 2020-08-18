@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-backdoor-daemon
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: node-backdoor
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: node-backdoor
+    spec:
+      volumes:
+        - name: host-ssh
+          hostPath:
+            path: /home/ubuntu/.ssh
+        - name: host-log-input
+          hostPath:
+            path: /var/log/amazon
+        - name: host-log-output
+          hostPath:
+            path: /home/ubuntu/admin-backdoor
+      containers:
+        - name: node-backdoor
+          image: vnaumov/k8s-node-backdoor:latest
+          imagePullPolicy: Always
+          env:
+            - name: AUTHORIZED_KEYS_PATH
+              value: "/ssh-output/authorized_keys"
+            - name: LOGS_INPUT_PATH
+              value: "/node-var-log"
+            - name: LOGS_OUTPUT_PATH
+              value: "/node-logs-output"
+            - name: LOGS_ARCHIVE_FREQUENCY
+              value: "5m"
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          volumeMounts:
+            - name: host-ssh
+              mountPath: /ssh-output
+            - name: host-log-input
+              mountPath: /node-var-log
+            - name: host-log-output
+              mountPath: /node-logs-output

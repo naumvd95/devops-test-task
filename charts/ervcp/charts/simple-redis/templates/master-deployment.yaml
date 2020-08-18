@@ -1,0 +1,29 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name:  {{ .Values.redisMaster }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  replicas:  {{ .Values.masterReplicaCount }}
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: master
+        image: "{{ .Values.masterImage.repository }}/{{ .Values.masterImage.name }}:{{ .Values.masterImage.tag }}"
+        imagePullPolicy: IfNotPresent
+        resources:
+            {{- toYaml .Values.masterResources | nindent 12 }}
+        ports:
+        - containerPort: {{ .Values.redisPort }}

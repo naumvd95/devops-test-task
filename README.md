@@ -30,3 +30,105 @@ This task is loosely-defined on purpose. With DevOps being a set of practices at
 Good luck, and hope to hear back from you soon!
 
 _Ataccama Cloud Solutions team_
+
+
+## CICD architecture
+
+### stage 1
+
+To provide valid development process we need to prepare at least 2 k8s clusters:
+1. Staging/Development - for rolling out dev version of the application
+2. Prod - for upgrading existing application with latest release
+
+Need to store kubeconfig of p.1 k8s cluster as secret in your CICD platform (git actions workflow),
+on a permanent manner
+
+
+### stage 2
+
+Github workflow actions will perform operations for building and testing application.
+Similar operations available in Makefile to speedup local development:
+
+## Technology introduction
+
+### Why golang?
+
+Shortly:
+It's pretty easy to operate w/ binaries while you decide to follow microservice architecture.
+Packing code into binaries, moving it inside containers and run over the container orchestrator
+
+### Why binaries?
+
+Shortly:
+User can operate that binary w/o installation tons of dependencies. Just `wget` to your local machine and run.
+Simple. From the other hand you may pack binaries in containers and run as cloud-native app.
+
+### Why containers?
+
+Shortly:
+Get rid of all dependencies, you need only docker. Own safe sandbox with separate cgroups/namespaces for your experiments.
+Check applicaition against multiple Operation Systems. Ability to run application in microservices-way. Containers is the best way
+to build/test go binaries as well, you don't need to manage complicated go-infra on your CI/CD system
+
+### Why microservices?
+
+Shortly:
+Cloud-native applications should be as much agile as possible and have ability to reflect to all code
+changes quickly. When your applocation consists of thousands of pieces, it's easier to
+change small parts and monitor whole service reflection. It's easier to debug application because each microservice
+was developed to perform single, strictly defined goal. It's easier to perform upgrade procedures as well.
+
+### Why Kubernetes?
+
+Shortly:
+Best container orchestration system at the current moment (26.04.2020).
+- Pretty easy to implement Logging/Monitoring
+- Actively develops
+- CRD's for application customization
+- Simple declarative way to rollout all k8s-objects
+- Api customizable
+- Customization of cri(docker, containerd), cni(calico, weave), csi(cloud-providers drivers, like cinder csi for OS cloud) interfaces
+
+### Why Helm?
+
+Shortly:
+Good approach for delivering/upgrading application on top of k8s cluster:
+- upgrade support
+- rollback support
+- CICD implementation is simple(helm bin in docker image for example)
+- specify dependencies in
+
+### Why AWS?
+
+Shortly:
+Most of companies in 2019-2020 prefer AWS as Cloud Platform for it's products. There is too much to say about differencies between cloud providers, but in our application abstraction level, there is no big difference.
+
+### Why Terraform?
+
+Shortly:
+Awesome IaaC service that supports most valuable cloud providers and allow us simply build boilerplate for k8s cluster.
+Also, it will be easier to support application testing on multiple cloud providers.
+- Immutable infrastructure
+- Declarative, not procedural code
+- Super portability
+- Ease of full-stack deployment
+
+### Why Ansible?
+
+Shortly:
+Agile configuration management tool with simple over-ssh client-less architecture. Good solution for quick RnD projects.
+Allows to rollout dev k8s cluster against instances boilerplate, made by terraform, that provides ability to automate
+testing application daemonset.
+
+### Why Makefile?
+
+Shortly:
+Aggegating all logic, needed to build/test/promote apllication in one place in form of simple shell scripts, allows you:
+- Simplify development process, ypu may run make targets from your local machine
+- Simplify CICD integration, pipelines will use the same make targets to reduce code duplicationg and possible differencies between local development and CI support.
+- Trasfer from one CICD system to another is greatly facilitated, because all depedencies and logic hidden in project itslef, not in infra code.
+
+### Why CICD?
+
+Shortly:
+Simplify development/testing/promoting processes, reduce human-related errors. Basically it's useless question in 2020.

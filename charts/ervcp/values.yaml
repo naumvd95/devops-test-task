@@ -1,0 +1,29 @@
+redisMasterName: redis-master
+redisPort: 6379
+redisPassword: swordfish
+
+# redis subchart config
+simple_redis:
+    namespace: ervcp
+    redisMaster: redis-master
+    redisPort: 6379
+    redisPassword: swordfish
+
+# ervcp application
+replicaCount: 3
+namespace: ervcp
+
+image:
+  repository: vnaumov
+  name: ervcp
+  tag: latest
+  pullPolicy: Always
+
+appPort: 8080
+service:
+  type: LoadBalancer
+
+resources:
+   requests:
+    cpu: 100m
+    memory: 128Mi

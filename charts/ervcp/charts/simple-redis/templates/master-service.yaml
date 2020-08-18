@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redisMaster }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: redis
+    role: master
+    tier: backend
+spec:
+  ports:
+  - port: {{ .Values.redisPort }}
+    targetPort: {{ .Values.redisPort }}
+  selector:
+    app: redis
+    role: master
+    tier: backend
