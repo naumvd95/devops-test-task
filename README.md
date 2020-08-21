@@ -48,6 +48,12 @@ cd cicd_stage_1
 less README.md
 ```
 
+Need to store dockerhub credentials as secret in your CICD platform (git actions workflow),
+on a permanent manner. Using:
+
+```bash
+make DOCKER_USERNAME=your_dockerhub_username DOCKER_PASSWORD=your_dockerhub_pwd image-push
+```
 
 ### stage 2
 
@@ -138,7 +144,7 @@ Good approach for delivering/upgrading application on top of k8s cluster:
 - upgrade support
 - rollback support
 - CICD implementation is simple(helm bin in docker image for example)
-- specify dependencies in
+- manage application service dependencies as sub-charts
 
 ### Why AWS?
 

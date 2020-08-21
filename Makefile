@@ -102,7 +102,7 @@ deploy-app:
 	--create-namespace
 
 cleanup-app:
-	helm delete --kubeconfig $(KUBECONFIG) $(HELM_ARGS) ervcp-$(GIT_REV)
+	helm delete --kubeconfig $(KUBECONFIG) $(HELM_ARGS) ervcp-$(GIT_REV)  --namespace ervcp-$(GIT_REV)
 
 .PHONY: fix
 fix:

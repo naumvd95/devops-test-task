@@ -21,4 +21,5 @@
   register: join_cluster
   notify:
     - recreate kube-dns
+    - recreate kube-proxy
     - restart kubelet

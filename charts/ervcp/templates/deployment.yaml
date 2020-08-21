@@ -26,8 +26,6 @@ spec:
           value: "{{ .Values.simple_redis.redisMaster }}"
         - name: ERVCP_DB_PORT
           value: "{{ .Values.simple_redis.redisPort }}"
-        - name: ERVCP_DB_PW
-          value: "{{ .Values.simple_redis.redisPassword }}"
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
         ports:

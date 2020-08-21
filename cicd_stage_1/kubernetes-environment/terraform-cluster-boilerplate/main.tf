@@ -227,6 +227,15 @@ resource "aws_security_group" "vn-k8s-backdoor-sg-common" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # TODO manage sg effictevely by splitting into cp sg and worker sg
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = [var.vpc_cidr]
+    description = "kube-proxy services"
+  }
+
   # app
   ingress {
     from_port   = 8080
@@ -238,6 +247,13 @@ resource "aws_security_group" "vn-k8s-backdoor-sg-common" {
   ingress {
     from_port   = 6379
     to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "redis"
+  }
+  ingress {
+    from_port   = 16379
+    to_port     = 16379
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     description = "redis"
