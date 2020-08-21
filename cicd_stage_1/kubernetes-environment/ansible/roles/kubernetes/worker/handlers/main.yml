@@ -5,6 +5,12 @@
   run_once: true
   ignore_errors: true
 
+- name: recreate kube-proxy
+  command: kubectl --kubeconfig={{ kubeadmin_config }} -n kube-system delete pods -l k8s-app=kube-proxy
+  delegate_to: "{{ groups['k8s-boilerplate-masters'][0] }}"
+  run_once: true
+  ignore_errors: true
+
 - name: restart kubelet
   systemd:
     name: kubelet

@@ -45,17 +45,16 @@ func getConfig(key string, def string) string {
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	count := 0
 	db := getDb()
-	val, err := db.Get("count").Result()
-	if err != nil {
-		klog.Error(err)
-	}
+	klog.Info("Getting actual count of the visitors")
+	val, _ := db.Get("count").Result()
 
 	if val != "" {
 		count, _ = strconv.Atoi(val)
 	}
 
+	klog.Info("Counting")
 	count = count + 1
-	_, err = db.Set("count", count, 0).Result()
+	_, err := db.Set("count", count, 0).Result()
 	if err != nil {
 		klog.Error(err)
 	}
@@ -64,6 +63,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 	if count == 100 {
 		data = Data{Title: fmt.Sprintf("Congratulations, You Are The %dth visitor to this site!", count)}
 	}
+	klog.Infof("Current count: %v", count)
 	tmpl := template.Must(template.ParseFiles("index.html"))
 	err = tmpl.Execute(w, data)
 	if err != nil {

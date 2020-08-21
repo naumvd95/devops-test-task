@@ -6,25 +6,9 @@ masterImage:
 
 redisMaster: redis-master
 redisPort: 6379 
-redisPassword: swordfish
 
 masterReplicaCount: 1
 masterResources:
    requests:
     cpu: 100m
     memory: 128Mi
-
-#worker configuration
-workerImage:
-  repository: gcr.io/google_samples
-  name: gb-redisslave
-  tag:  v3
-
-workerName: redis-worker
-workerReplicaCount: 2
-workerResources:
-   requests:
-    cpu: 100m
-    memory: 100Mi
-
-

@@ -23,3 +23,6 @@ Delete:
 ```bash
 make AWS_PROFILE=foo destroy-tf-boilerplate
 ```
+
+#### Room for improvements
+- manage k8s control plane and worker node security groups as separate entities
