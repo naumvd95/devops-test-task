@@ -54,6 +54,42 @@ less README.md
 Github workflow actions will perform operations for building and testing application.
 Similar operations available in Makefile to speedup local development:
 
+Versioning:
+
+```bash
+make version
+```
+
+Update go dependencies:
+
+```bash
+make depend
+make depend-update
+```
+
+
+Lint source code & helm chart:
+
+```bash
+make infra-lint
+```
+
+Build/Push new application image:
+
+```bash
+make app-image
+make image-push
+```
+
+Manage application on predefined k8s cluster:
+
+```bash
+make deploy-app
+make HELM_ARGS='--upgrade' deploy-app
+make cleanup-app
+```
+
+
 ## Technology introduction
 
 ### Why golang?
@@ -93,6 +129,7 @@ Best container orchestration system at the current moment (26.04.2020).
 - Simple declarative way to rollout all k8s-objects
 - Api customizable
 - Customization of cri(docker, containerd), cni(calico, weave), csi(cloud-providers drivers, like cinder csi for OS cloud) interfaces
+- AWS cloud provider support for management LB/PVC for applications automatically
 
 ### Why Helm?
 

@@ -7,7 +7,6 @@ masterImage:
 redisMaster: redis-master
 redisPort: 6379 
 redisPassword: swordfish
-namespace: ervcp
 
 masterReplicaCount: 1
 masterResources:

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name:  {{ .Release.Name }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.namespace }}
   labels:
     app: ervcp
 spec:

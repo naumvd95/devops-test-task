@@ -52,7 +52,7 @@ ifeq ($(GOOS),linux)
 	TMPDIR="$$(mktemp -d)"; \
 	cleanup () { rm -rf "$${TMPDIR}"; }; \
 	trap cleanup EXIT; \
-	cp bin/ervcp "$${TMPDIR}"; \
+	cp -R bin/ervcp app/* "$${TMPDIR}"; \
 	docker build -t $(REGISTRY)/ervcp:$(APP_VERSION) -f Dockerfile "$${TMPDIR}"
 else
 	$(error Please set GOOS=linux for building the image)
@@ -96,7 +96,10 @@ infra-lint: lint
 HELM_ARGS :=
 KUBECONFIG := cicd_stage_1/kubeconfig-public.yaml
 deploy-app:
-	helm install --kubeconfig $(KUBECONFIG) --wait $(HELM_ARGS) ervcp-$(GIT_REV) charts/ervcp/ --set image.tag=$(APP_VERSION)
+	helm install --kubeconfig $(KUBECONFIG) --wait $(HELM_ARGS) ervcp-$(GIT_REV) charts/ervcp/ \
+	--set image.tag=$(APP_VERSION) \
+	--namespace ervcp-$(GIT_REV) \
+	--create-namespace
 
 cleanup-app:
 	helm delete --kubeconfig $(KUBECONFIG) $(HELM_ARGS) ervcp-$(GIT_REV)
