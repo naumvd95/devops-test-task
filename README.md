@@ -48,8 +48,8 @@ cd cicd_stage_1
 less README.md
 ```
 
-Need to store dockerhub credentials as secret in your CICD platform (git actions workflow),
-on a permanent manner. Using:
+Need to store dockerhub credentials as secret `dockerhub_username` and `dockerhub_password`
+in your CICD platform (git actions workflow), on a permanent manner. Local use:
 
 ```bash
 make DOCKER_USERNAME=your_dockerhub_username DOCKER_PASSWORD=your_dockerhub_pwd image-push

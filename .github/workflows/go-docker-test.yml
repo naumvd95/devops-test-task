@@ -25,16 +25,42 @@ jobs:
         -w=/go/src/github.com/naumvd95/devops-test-task \
         vnaumov/go-k8s-infra-ops:latest make app-image
 
+    - name: Get rc version
+      run: echo "::set-output name=version::$(make version)"
+      id: release_candidate
+
     - name: Push image
       run: |
           make \
           DOCKER_USERNAME=${{ secrets.dockerhub_username }} \
           DOCKER_PASSWORD=${{ secrets.dockerhub_password }} \
           image-push
-    
-    - name: Get image version
-      run: echo "::set-output name=docker_image::$(make version)"
-      id: release_candidate
       
-    - name: Smoke test
-      run: echo TODO
+    - name: Deploy app
+      run: |
+        echo "skipping next steps [deploy_app, get_app_external_endpoint, smoke_test]. \
+              They cannot be properly tested w/o kubeconfig secret, code commented in actions"
+
+      #    - name: Deploy app
+      #      run: |
+      #        docker run --rm \
+      #        -v /var/run/docker.sock:/var/run/docker.sock \
+      #        -v $(pwd):/go/src/github.com/naumvd95/devops-test-task \
+      #        -v ${{ secrets.kubeconfig_ervcp_dev }}:/go/src/github.com/naumvd95/devops-test-task/kubeconfig.yaml
+      #        -w=/go/src/github.com/naumvd95/devops-test-task \
+      #        vnaumov/go-k8s-infra-ops:latest make KUBECONFIG=kubeconfig.yaml deploy-app
+      #
+      #    - name: Get ERVCP external endpoint
+      #      uses: actions-hub/kubectl@master
+      #        env:
+      #          KUBE_CONFIG: ${{ secrets.kubeconfig_ervcp_dev }}
+      #        with:
+      #          args: get svc --namespace ervcp-${{steps.release_candidate.outputs.version}} ervcp-${{steps.release_candidate.outputs.version}} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+      #      id: ervcp_ip
+      #
+      #    - name: Smoke test
+      #      uses: nick-invision/retry@v1
+      #      with:
+      #        timeout_minutes: 5
+      #        max_attempts: 30
+      #        command: curl http://${{ steps.ervcp_ip.outputs.version }}:8080

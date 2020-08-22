@@ -13,10 +13,13 @@ Create:
 make AWS_PROFILE=foo ansible-k8s
 ```
 
-Manage public kubeconfig file, stored in repository
+Verify cluster:
+
 ```bash
 kubectl --kubeconfig kubeconfig-public.yaml get nodes
 ```
+
+Manage public kubeconfig file as secret `kubeconfig_ervcp_dev` in your CICD (github actions).
 
 Delete:
 
