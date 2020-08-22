@@ -91,8 +91,6 @@ infra-lint: lint
 	helm lint --with-subcharts  charts/ervcp
 
 # Tests
-
-# TODO kubectl create ns .. && --set namespace=ervcp-dev-$(GIT_REV) for cicd
 HELM_ARGS :=
 KUBECONFIG := cicd_stage_1/kubeconfig-public.yaml
 deploy-app:
