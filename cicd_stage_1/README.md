@@ -13,6 +13,9 @@ Create:
 make AWS_PROFILE=foo ansible-k8s
 ```
 
+Hint: if `ansible-k8s` failed right after terraform target, it may happen because of small gap, when AWS public IP's unavailable,
+if so, just re-run above target.
+
 Verify cluster:
 
 ```bash

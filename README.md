@@ -95,6 +95,31 @@ make HELM_ARGS='--upgrade' deploy-app
 make cleanup-app
 ```
 
+### quick start
+
+Install dev tooling:
+[kubectl >= v.1.16](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+[helm >= v3.2.4](https://helm.sh/docs/intro/install/)
+[docker >= v19.03.8](https://docs.docker.com/get-docker/)
+
+
+Prepare day0/day1 ops:
+```bash
+cd cicd_stage_1/
+make AWS_PROFILE=foo ansible-k8s
+cd ../ #root of the repo
+make infra-lint
+make GOOS=linux REGISTRY=ataccama app-image
+make REGISTRY=ataccama DOCKER_USERNAME=ataccama_user DOCKER_PASSWORD=ataccama_pwd image-push
+make deploy-app
+
+```
+
+Verify app running well using `kubectl`, finally:
+
+```bash
+make cleanup-app
+```
 
 ## Technology introduction
 
