@@ -36,11 +36,11 @@ _Ataccama Cloud Solutions team_
 
 ### stage 1
 
-To provide valid development process we need to prepare at least 2 k8s clusters:
-1. Staging/Development - for rolling out dev version of the application
-2. Prod - for upgrading existing application with latest release
+- To provide valid development process we need to prepare initial K8s environment,
+follow simple design desribed in `cicd_stage_1/ERVCP_simple_CICD.png`.
 
-Need to store kubeconfig of p.1 k8s cluster as secret in your CICD platform (git actions workflow),
+
+- Need to store kubeconfig of created k8s cluster as secret in your CICD platform (git actions workflow),
 on a permanent manner
 
 ```bash
@@ -48,7 +48,7 @@ cd cicd_stage_1
 less README.md
 ```
 
-Need to store dockerhub credentials as secret `dockerhub_username` and `dockerhub_password`
+- Need to store dockerhub credentials as secret `dockerhub_username` and `dockerhub_password`
 in your CICD platform (git actions workflow), on a permanent manner. Local use:
 
 ```bash
@@ -57,7 +57,7 @@ make DOCKER_USERNAME=your_dockerhub_username DOCKER_PASSWORD=your_dockerhub_pwd 
 
 ### stage 2
 
-Github workflow actions will perform operations for building and testing application.
+Github workflow actions will perform operations for building and testing application `.github/workflows/`.
 Similar operations available in Makefile to speedup local development:
 
 Versioning:
@@ -137,14 +137,28 @@ Best container orchestration system at the current moment (26.04.2020).
 - Customization of cri(docker, containerd), cni(calico, weave), csi(cloud-providers drivers, like cinder csi for OS cloud) interfaces
 - AWS cloud provider support for management LB/PVC for applications automatically
 
+### Why self-managed Kubernetes?
+
+There are many ways to deploy/support k8s cluster except self-managed:
+- Cloud Provider's k8s API's (AWS, GCP, Azure)
+- Provider agnostic orchestration tooling (kubespray, kops)
+- Tooling for local development (minikube, kind)
+
+Benefits of self-managed:
+- No vendor lock
+- Customization is easier
+- This is repository for educational purposes, so it will be better to create everything from the scratch
+
+
 ### Why Helm?
 
 Shortly:
 Good approach for delivering/upgrading application on top of k8s cluster:
-- upgrade support
-- rollback support
-- CICD implementation is simple(helm bin in docker image for example)
 - manage application service dependencies as sub-charts
+- upgrade support including dependency charts
+- rollback support including dependency charts
+- packaging as archives, simple delivery
+- CICD implementation is simple(helm bin in docker image for example)
 
 ### Why AWS?
 
