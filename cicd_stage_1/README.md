@@ -27,7 +27,7 @@ Delete:
 make AWS_PROFILE=foo destroy-tf-boilerplate
 ```
 ⚠️  Warning: cleanup all application releases from k8s cluster before `Delete` operation.
-ERVCP applications needs in AWS ELB, that created dynamically through AWS cloud provider,
+ERVCP applications uses AWS ELB, that's creates dynamically through AWS cloud provider,
 Terraform will hang on vpc deleting operation because of unknown LB dependencies.
 
 #### Room for improvements
