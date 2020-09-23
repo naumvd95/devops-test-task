@@ -1,4 +1,4 @@
-# Ataccama DevOps Engineer Technical Challenge
+# DevOps Engineer Technical Challenge
 
 Hello! If you're reading this, you've applied to work with us as a DevOps Engineer. That's great!
 As a first round of our hiring process, we want to see your technical ability. Please, read this README carefully, as it contains everything that you neeed to complete the task.
@@ -28,8 +28,6 @@ Apart from that we will evaluate:
 This task is loosely-defined on purpose. With DevOps being a set of practices at best and a buzzword at worst, we want to leave you some creative freedom in how you approach this task. There is no wrong solution, apart from a solution that outright doesn't work, so don't worry about it.
 
 Good luck, and hope to hear back from you soon!
-
-_Ataccama Cloud Solutions team_
 
 
 ## CICD architecture
@@ -128,6 +126,7 @@ make cleanup-app
 Shortly:
 It's pretty easy to operate w/ binaries while you decide to follow microservice architecture.
 Packing code into binaries, moving it inside containers and run over the container orchestrator
+Simple concurrency design
 
 ### Why binaries?
 
@@ -159,7 +158,7 @@ Best container orchestration system at the current moment (26.04.2020).
 - CRD's for application customization
 - Simple declarative way to rollout all k8s-objects
 - Api customizable
-- Customization of cri(docker, containerd), cni(calico, weave), csi(cloud-providers drivers, like cinder csi for OS cloud) interfaces
+- Customization of cri(docker, containerd, etc.), cni(calico, weave, etc.), csi(cloud-providers drivers, like cinder csi for OS cloud) interfaces
 - AWS cloud provider support for management LB/PVC for applications automatically
 
 ### Why self-managed Kubernetes?
@@ -219,3 +218,4 @@ Aggegating all logic, needed to build/test/promote apllication in one place in f
 
 Shortly:
 Simplify development/testing/promoting processes, reduce human-related errors. Basically it's useless question in 2020.
+TODO: specify concrete examples
